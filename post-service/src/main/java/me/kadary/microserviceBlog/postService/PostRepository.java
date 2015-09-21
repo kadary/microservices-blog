@@ -9,5 +9,7 @@ public interface PostRepository extends MongoRepository<Post, String> {
 	
 	public Post findByTitle(String title);
 
-	public List<Post> findByUserId(String userID);
+	public List<Post> findByUserId(String userId);
+	
+	public List<Post> findByPostId(String postId);
 }

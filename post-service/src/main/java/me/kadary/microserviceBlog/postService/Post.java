@@ -21,7 +21,10 @@ public class Post {
 		this.setTitle(title);
 		this.setContent(content);
 	}
-
+	
+	public String getPostId() {
+		return postId;
+	}
 
 	public String getUserId() {
 		return userId;
