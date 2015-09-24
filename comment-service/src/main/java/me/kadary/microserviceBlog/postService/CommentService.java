@@ -3,7 +3,6 @@ package me.kadary.microserviceBlog.postService;
 import java.util.List;
 
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,12 @@ public class CommentService {
 	@Autowired
 	private CommentRepository repository;
 	
+	@RequestMapping(method=RequestMethod.GET, value="api/comments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Comment> getComments() {
+		return this.repository.findAll();
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, value="api/comments/{postId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Comment> getPost(@PathVariable String postId) {
@@ -39,9 +44,9 @@ public class CommentService {
 		return comment;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="api/comments")
+	@RequestMapping(method=RequestMethod.GET, value="api/user/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Comment> getUserComments(@QueryParam("userId") String userId) {
+	public List<Comment> getUserComments(@PathVariable String userId) {
 		return this.repository.findByUserId(userId);
 	}
 	
