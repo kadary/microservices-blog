@@ -89,3 +89,36 @@ gateway.get('/posts', function (req, res) {
     });
   });
 });
+
+//post fetcher API by id
+gateway.get('/post', function (req, res) {
+  var result = {};
+
+  var postFetcherRequest = {
+    method: 'GET',
+    url: 'http://localhost:7001/api/post/' + req.query.id,
+    headers:
+    {
+      authorization: req.headers.authorization
+    }
+  };
+  var commentsFetcherRequest = {
+    method: 'GET',
+    url: 'http://localhost:7002/api/comments/' + req.query.id,
+    headers: {
+      authorization: req.headers.authorization
+    }
+  };
+
+  request(commentsFetcherRequest, function (error, response, body) {
+    if (error) throw new Error(error);
+    var c = JSON.parse(body);
+
+    request(postFetcherRequest, function (error, response, body) {
+      if (error) throw new Error(error);
+      var post = JSON.parse(body);
+      result = merge.recursive(true, post[0], { comments: JSON.parse(JSON.stringify(c))});
+      res.json(result);
+    });
+  });
+});
