@@ -1,4 +1,4 @@
-package me.kadary.microserviceBlog.userService;
+package me.kadary.microservices.blog.auth;
 
 import java.security.Principal;
 
