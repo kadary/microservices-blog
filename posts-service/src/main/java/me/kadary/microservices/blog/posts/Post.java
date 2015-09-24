@@ -1,4 +1,4 @@
-package me.kadary.microserviceBlog.postService;
+package me.kadary.microservices.blog.posts;
 
 import org.springframework.data.annotation.Id;
 

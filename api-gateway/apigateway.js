@@ -42,7 +42,7 @@ gateway.post('/login', function (req, res) {
   };
   request(options, function (error, response, body) {
     if (error) throw new Error(error);
-    res.json(body);
+    res.json(JSON.parse(body));
   });
 });
 

@@ -1,4 +1,4 @@
-package me.kadary.microserviceBlog.postService;
+package me.kadary.microservices.blog.posts;
 
 
 import java.util.List;
