@@ -8,8 +8,12 @@ var express = require('express'),
 
 // init the gateway
 var gateway = express();
+gateway.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, authorization");
+  next();
+});
 gateway.use(bodyParser.json());
-
 // init the front-end server
 var server = gateway.listen(3000, function () {
   var host = server.address().address;
