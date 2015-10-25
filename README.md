@@ -24,6 +24,11 @@ Soit vous pouvez déployer vous même l'image AMI (Amazone) que j'ai préparé a
 sur votre compte d'essai AMAZON, ce qui vous donnera un accès root et vous verez comment les services sont managés.
 Dans ce dernier cas, de votre console EC2 (https://eu-central-1.console.aws.amazon.com/ec2/v2/home?region=eu-central-1#Instances:sort=instanceId), 
 créer une nouvelle installe à partir de l'image AMI nommée "ms-blog"
+Une fois l'instance démarrée, lancez la commande bash:
+``` 
+./start-services.sh
+```
+Cette commande lancera tous les services pour vous, vous n'avez plus qu'à modifier l'URL de l'api-gateway dans votre client pour pouvoir utiliser cette architecture en backend
 
 ## Pour tester en local, vous aurez besoin de:
 - Une version de java sur votre ordinateur
