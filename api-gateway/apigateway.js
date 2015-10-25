@@ -22,7 +22,6 @@ var server = gateway.listen(3000, function () {
   console.log('Api Gateway listening at http://%s:%s', host, port);
 });
 
-
 gateway.get('/', function (req, res) {
   res.send('Welcome to microservices blog API Gateway');
 });
@@ -79,13 +78,18 @@ gateway.get('/posts', function (req, res) {
       var posts = JSON.parse(body);
       async.eachSeries(posts, function (post, callback) {
         var postComments = [];
-        comments.forEach(function (comment, index, array) {
-          if (comment.postId == post.postId) {
-            postComments.push(comment);
-          }
-        });
-        result.push(merge.recursive(true, post, { comments: JSON.parse(JSON.stringify(postComments))}));
-        callback();
+        try {
+          comments.forEach(function (comment, index, array) {
+            if (comment.postId == post.postId) {
+              postComments.push(comment);
+            }
+          });
+          result.push(merge.recursive(true, post, { comments: JSON.parse(JSON.stringify(postComments))}));
+          callback();
+        } catch (e) {
+            console.log('Caught exception: ' + e);
+            res.send(e);
+        }
       }, function (err) {
         if (err) { throw err; }
         res.json(result);
