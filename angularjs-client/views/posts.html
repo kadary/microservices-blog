@@ -1,13 +1,93 @@
 <div id="posts">
-    <h2>{{header}}</h2>
+    <div class="row">
+    <h2 ng-show="!showComments">{{header}}</h2>
 
-    <ul class="media-list">
-        <li class="media" data-ng-repeat="post in posts | orderBy: 'id'">
-            <a class="pull-left" href="#"><img class="media-object" src="http://placehold.it/100x100"></a>
+    <div class="span7">
+    <ul ng-show="!showComments" class="media-list">
+        <li class="media" data-ng-repeat="post in posts | orderBy: 'postId'">
             <div class="media-body">
-                <h4 class="media-heading">{{post.title}} <small class="muted">by: {{post.author}}</small></h4>
-                <p>{{post.extended}}</p>
+                <h4 class="media-heading"><a ng-click="setComments(post)" href="">{{post.title}}</a> <small class="muted">by: user {{post.userId}}</small></h4>
+                <p>{{post.content}}</p>
             </div>
         </li>
     </ul>
+
+    <div ng-show="showComments" class="media-body">
+      <a href="" class="btn" ng-click="return()">Return</a>
+      <h4 class="media-heading">{{p.title}} <small class="muted">by: user {{p.userId}}</small></h4>
+      <p>{{p.content}}</p>
+      <ul class="media-list" ng-show="showComments">
+        <hr>
+        <div class="media-body">Comments
+          <li class="media" data-ng-repeat="comment in p.comments | orderBy: 'p.comments.commentId'">
+              <p>{{comment.content}}</p>
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sapn5">
+
+<!-- CHAT MARKUP -->
+<div class="example-chat l-demo-container">
+  <header>Blog Engine Chat Module</header>
+
+  <div class='example-chat-toolbar'>
+    <label for="nameInput">Username:</label>
+    <input type='text' id='nameInput' placeholder='enter a username...'>
+  </div>
+
+  <ul id='example-messages' class="example-chat-messages"></ul>
+
+  <footer>
+    <input type='text' id='messageInput'  placeholder='Type a message...'>
+  </footer>
+</div>
+
+<!-- CHAT JAVACRIPT -->
+<script>
+  // CREATE A REFERENCE TO FIREBASE
+  var messagesRef = new Firebase('https://chat-service.firebaseio.com/');
+
+  // REGISTER DOM ELEMENTS
+  var messageField = $('#messageInput');
+  var nameField = $('#nameInput');
+  var messageList = $('#example-messages');
+
+  // LISTEN FOR KEYPRESS EVENT
+  messageField.keypress(function (e) {
+    if (e.keyCode == 13) {
+      //FIELD VALUES
+      var username = nameField.val();
+      var message = messageField.val();
+
+      //SAVE DATA TO FIREBASE AND EMPTY FIELD
+      messagesRef.push({name:username, text:message});
+      messageField.val('');
+    }
+  });
+
+  // Add a callback that is triggered for each chat message.
+  messagesRef.limitToLast(10).on('child_added', function (snapshot) {
+    //GET DATA
+    var data = snapshot.val();
+    var username = data.name || "anonymous";
+    var message = data.text;
+
+    //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+    var messageElement = $("<li>");
+    var nameElement = $("<strong class='example-chat-username'></strong>")
+    nameElement.text(username);
+    messageElement.text(message).prepend(nameElement);
+
+    //ADD MESSAGE
+    messageList.append(messageElement)
+
+    //SCROLL TO BOTTOM OF MESSAGE LIST
+    messageList[0].scrollTop = messageList[0].scrollHeight;
+  });
+</script>
+  </div>
+</div>
 </div>

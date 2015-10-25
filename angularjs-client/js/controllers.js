@@ -23,8 +23,10 @@ blog.controller('LoginController', function ($scope, $rootScope, $http, $locatio
 
 // post controller
 blog.controller('PostController', function ($scope, $rootScope, $http) {
-    $scope.header = "Derniers articles";
+    $scope.header = "Latest Posts";
     $scope.posts = [];
+    $scope.showComments = false;
+    $scope.p = {};
     $http.get("http://localhost:3000/posts", {
       headers: {
         authorization: $rootScope.credentials.token_type + " " + $rootScope.credentials.access_token
@@ -34,4 +36,12 @@ blog.controller('PostController', function ($scope, $rootScope, $http) {
       }, function(response) {
         alert(JSON.stringify(response));
       });
+
+      $scope.setComments = function(post) {
+        $scope.p = post;
+        $scope.showComments = true;
+      }
+      $scope.return = function() {
+        $scope.showComments = false;
+      }
     });
