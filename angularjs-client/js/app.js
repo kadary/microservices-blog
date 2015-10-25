@@ -18,3 +18,9 @@ blog.config(function ($routeProvider) {
     .otherwise({ redirectTo: '/login' });
 
 });
+
+blog.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});

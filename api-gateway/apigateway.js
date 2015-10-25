@@ -75,10 +75,10 @@ gateway.get('/posts', function (req, res) {
 
     request(postsFetcherRequest, function (error, response, body) {
       if (error) throw new Error(error);
+      try {
       var posts = JSON.parse(body);
       async.eachSeries(posts, function (post, callback) {
         var postComments = [];
-        try {
           comments.forEach(function (comment, index, array) {
             if (comment.postId == post.postId) {
               postComments.push(comment);
@@ -86,47 +86,60 @@ gateway.get('/posts', function (req, res) {
           });
           result.push(merge.recursive(true, post, { comments: JSON.parse(JSON.stringify(postComments))}));
           callback();
-        } catch (e) {
-            console.log('Caught exception: ' + e);
-            res.send(e);
-        }
       }, function (err) {
         if (err) { throw err; }
         res.json(result);
       });
+    } catch (e) {
+        console.log('Caught exception: ' + e);
+        res.send(e);
+    }
     });
   });
 });
 
-//post fetcher API by id
-gateway.get('/post', function (req, res) {
-  var result = {};
-
-  var postFetcherRequest = {
-    method: 'GET',
-    url: 'http://localhost:7001/api/post/' + req.query.id,
-    headers:
-    {
-      authorization: req.headers.authorization
-    }
-  };
-  var commentsFetcherRequest = {
-    method: 'GET',
-    url: 'http://localhost:7002/api/comments/' + req.query.id,
+//Add Post
+gateway.post('/post', function (req, res) {
+  var options = {
+    method: 'POST',
+    url: 'http://localhost:7001/api/posts',
     headers: {
+      accept: 'application/json',
       authorization: req.headers.authorization
-    }
+    },
+    body: req.body,
+    json: true
   };
-
-  request(commentsFetcherRequest, function (error, response, body) {
+  request(options, function (error, response, body) {
     if (error) throw new Error(error);
-    var c = JSON.parse(body);
+    try {
+      res.send(body);
+    } catch (e) {
+      console.log('Caught exception: ' + e);
+      res.send(e);
+    }
+  });
+});
 
-    request(postFetcherRequest, function (error, response, body) {
-      if (error) throw new Error(error);
-      var post = JSON.parse(body);
-      result = merge.recursive(true, post[0], { comments: JSON.parse(JSON.stringify(c))});
-      res.json(result);
-    });
+//Add Post
+gateway.post('/comment', function (req, res) {
+  var options = {
+    method: 'POST',
+    url: 'http://localhost:7002/api/comments',
+    headers: {
+      accept: 'application/json',
+      authorization: req.headers.authorization
+    },
+    body: req.body,
+    json: true
+  };
+  request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    try {
+      res.send(body);
+    } catch (e) {
+      console.log('Caught exception: ' + e);
+      res.send(e);
+    }
   });
 });
