@@ -10,7 +10,7 @@ blog.controller('LoginController', function ($scope, $rootScope, $http, $locatio
           username: $scope.username,
           password: $scope.password
         };
-        $http.post("http://localhost:3000/login", data)
+        $http.post("http://ec2-52-28-90-102.eu-central-1.compute.amazonaws.com:3000/login", data)
         .then(function (response) {
           $rootScope.credentials = response.data;
           $location.path("/posts");
@@ -31,7 +31,7 @@ blog.controller('PostController', function ($scope, $rootScope, $http) {
   $scope.postContent = "";
   $scope.postToCommentId = "";
   $scope.commentContent = "";
-  $http.get("http://localhost:3000/posts", {
+  $http.get("http://ec2-52-28-90-102.eu-central-1.compute.amazonaws.com:3000/posts", {
     headers: {
       authorization: $rootScope.credentials.token_type + " " + $rootScope.credentials.access_token
     }})
@@ -57,7 +57,7 @@ blog.controller('PostController', function ($scope, $rootScope, $http) {
           title: $scope.postTitle,
           content: $scope.postContent
         };
-        $http.post("http://localhost:3000/post", data, {
+        $http.post("http://ec2-52-28-90-102.eu-central-1.compute.amazonaws.com:3000/post", data, {
           headers: {
             authorization: $rootScope.credentials.token_type + " " + $rootScope.credentials.access_token
           }})
@@ -76,7 +76,7 @@ blog.controller('PostController', function ($scope, $rootScope, $http) {
           postId: $scope.postToCommentId,
           content: $scope.commentContent
         };
-        $http.post("http://localhost:3000/comment", data, {
+        $http.post("http://ec2-52-28-90-102.eu-central-1.compute.amazonaws.com:3000/comment", data, {
           headers: {
             authorization: $rootScope.credentials.token_type + " " + $rootScope.credentials.access_token
           }})
