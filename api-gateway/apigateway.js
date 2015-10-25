@@ -24,7 +24,7 @@ var server = gateway.listen(3000, function () {
 
 
 gateway.get('/', function (req, res) {
-  res.send('Welcome to the API Gateway');
+  res.send('Welcome to microservices blog API Gateway');
 });
 
 //login API
