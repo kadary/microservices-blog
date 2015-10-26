@@ -24,8 +24,8 @@ Soit vous vous rendez sur le lien http://microservices-blog.kadary.me
 Soit vous telécharger les versions packagées à cette URL: https://github.com/demkada/microservices-blog/releases
 et exécutez les commandes suivantes:
 ```
-java - jar authentication-service-0.0.1.jar
-java - jar posts-service-1.2.6.RELEASE.jar
+java -jar authentication-service-0.0.1.jar
+java -jar posts-service-1.2.6.RELEASE.jar
 java -jar comments-service-1.2.6.RELEASE.jar
 node ./api-gateway //Après avoir dezippé le fichier api-gateway.zip et je suppose que la plateforme nodeJs est fonctionnelle
 ```
