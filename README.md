@@ -20,6 +20,17 @@ un vrai logiciel distribué.
 
 ## Pour tester dans le cloud:
 Soit vous vous rendez sur le lien http://microservices-blog.kadary.me
+
+Soit vous telécharger les versions packagées à cette URL: https://github.com/demkada/microservices-blog/releases
+et exécutez les commandes suivantes:
+```
+java - jar authentication-service-0.0.1.jar
+java - jar posts-service-1.2.6.RELEASE.jar
+java -jar comments-service-1.2.6.RELEASE.jar
+node ./api-gateway //Après avoir dezippé le fichier api-gateway.zip et je suppose que la plateforme nodeJs est fonctionnelle
+```
+Et lancez le fichier index.html présent dans le répertoire angularjs-client
+
 Soit vous pouvez déployer vous même l'image AMI (Amazone) que j'ai préparé avec toutes les dépendances néccessaires
 sur votre compte d'essai AMAZON, ce qui vous donnera un accès root et vous verez comment les services sont managés.
 Dans ce dernier cas, de votre console EC2 (https://eu-central-1.console.aws.amazon.com/ec2/v2/home?region=eu-central-1#Instances:sort=instanceId), 
