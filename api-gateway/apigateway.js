@@ -45,7 +45,12 @@ gateway.post('/login', function (req, res) {
   };
   request(options, function (error, response, body) {
     if (error) throw new Error(error);
-    res.json(JSON.parse(body));
+    try {
+        res.json(JSON.parse(body));
+    } catch(e) {
+        console.log('Caught exception: ' + e);
+        res.send(e);
+    }
   });
 });
 
